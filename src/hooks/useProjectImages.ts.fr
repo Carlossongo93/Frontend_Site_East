@@ -1,0 +1,83 @@
+/**
+ * @file useProjectImages hook to dynamically load images from project folders
+ */
+
+import { useState, useEffect } from 'react'
+
+/**
+ * Hook to load images from a project folder
+ * Dynamically imports images based on folder name
+ */
+export function useProjectImages(folderName: string): string[] {
+  const [images, setImages] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const loadImages = async () => {
+      try {
+        // Map folder names to image paths
+        const imagePath = `/images/${encodeURIComponent(folderName)}`
+
+        // Try to fetch file list from the folder
+        // In production with proper backend, this would call an API
+        // For now, we'll use a manual mapping approach
+        const imageFiles = await getImagesForFolder(folderName)
+        setImages(imageFiles)
+      } catch (error) {
+        console.warn(`Could not load images for folder: ${folderName}`)
+        setImages([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadImages()
+  }, [folderName])
+
+  return images
+}
+
+/**
+ * Helper function to map folder names to image files
+ * This is a manual mapping since we don't have direct folder access from frontend
+ */
+async function getImagesForFolder(folderName: string): Promise<string[]> {
+  // Manual mapping of project folders to their images
+  const imageMapping: Record<string, string[]> = {
+    'Réseau incendie dépôt Hydrocarbure OLA ENERGY GABON _ Port-Gentil': [
+      '/images/01 Réseau incendie dépôt Hydrocarbure OLA ENERGY GABON _ Port-Gentil',
+    ],
+    'Construction d\'une station service communautaire à MEKAMBO': [
+      '/images/02 Construction d\'une station service communautaire à MEKAMBO',
+    ],
+    'Installation Unité de traitement d\'eau à Lambaréné , Raccordement tuyauterie et Bâche à eau': [
+      '/images/03 Installation Unité de traitement d\'eau à Lambaréné , Raccordement tuyauterie et Bâche à eau',
+    ],
+    'Installation Unité de traitement d\'eau à Ntoum_Cim gabon': [
+      '/images/04 Installation Unité de traitement d\'eau à Ntoum_Cim gabon',
+    ],
+    'Cuve de traitement des boues hydrocarburées_ Schulmberger Prt gentil': [
+      '/images/05 Cuve de traitement des boues hydrocarburées_ Schulmberger Prt gentil',
+    ],
+    'Condtruction d\'un bac de retention et installation des cuves pour carburant à GZES port à bois Owendo': [
+      '/images/06 Condtruction d\'un bac de retention et installation des cuves pour carburant à GZES port à bois Owendo',
+    ],
+    'Construction d\'une plateforme bétonnée pour Bâche à eau de 600 m3': [
+      '/images/07 Construction d\'une plateforme bétonnée pour Bâche à eau de 600 m3',
+    ],
+    'Fabrication Atelier': ['/images/08 Fabrication Atelier'],
+    'Fabrication et Montage d\'un Auvent de Piste pour la station service OLA ENERGY GABON de NTOUM': [
+      '/images/09 Fabrication et Montage d\'un Auvent de Piste pour la station service OLA ENERGY GABON de NTOUM',
+    ],
+    'Aménagement intérieur': ['/images/10 Aménagement intérieur'],
+    'Modification et amenagement des wagons': ['/images/11 Modification et amenagement des wagons'],
+    'Réparation et mise en conformité des totem pour stations services': [
+      '/images/12 Réparation et mise en conformité des totem pour stations services',
+    ],
+    'Construction d\'une station service communautaire à MINVOUL': [
+      '/images/13 Construction d\'une station service communautaire à MINVOUL',
+    ],
+  }
+
+  return imageMapping[folderName] || []
+}
