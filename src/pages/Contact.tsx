@@ -1,15 +1,20 @@
 /**
- * @file Contact page with a basic contact form.
+ * @file Contact page with a basic contact form integrated with Web3Forms.
  */
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { submitContactMessage, type ContactFormPayload } from '../shared/api/forms'
 
-/**
- * ContactPage renders a form for general enquiries.
- */
+// On définit la structure des données directement ici
+interface ContactFormPayload {
+  name: string
+  email: string
+  phone?: string
+  subject: string
+  message: string
+}
+
 export default function ContactPage() {
   const { t } = useTranslation()
   const {
@@ -18,16 +23,44 @@ export default function ContactPage() {
     reset,
     formState: { isSubmitting },
   } = useForm<ContactFormPayload>()
+  
   const [submitted, setSubmitted] = useState(false)
 
   /**
-   * Handles form submission by calling the simulated API helper.
+   * Envoi des données vers Web3Forms au format JSON
    */
   const onSubmit = async (data: ContactFormPayload) => {
     setSubmitted(false)
-    await submitContactMessage(data)
-    setSubmitted(true)
-    reset()
+    
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          // 🚨 REMPLACEZ LA CLÉ CI-DESSOUS PAR CELLE REÇUE PAR EMAIL
+          access_key: "f1c683b4-eba6-4046-b0c6-08cd5d1395e0",
+          // Permet de définir l'objet de l'email que vous recevrez
+          subject: `Contact Web: ${data.subject || 'Nouveau message'}`,
+          ...data // On injecte toutes les données du formulaire (nom, email, message...)
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true)
+        reset() // Vide le formulaire
+      } else {
+        console.error("Erreur Web3Forms:", result)
+        alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.")
+      }
+    } catch (error) {
+      console.error("Erreur réseau:", error)
+      alert("Problème de connexion au serveur.")
+    }
   }
 
   return (
@@ -42,10 +75,7 @@ export default function ContactPage() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div>
-          <label
-            htmlFor="name"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('contact.name')}
           </label>
           <input
@@ -54,11 +84,9 @@ export default function ContactPage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="email"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('contact.email')}
           </label>
           <input
@@ -68,11 +96,9 @@ export default function ContactPage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="phone"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="phone" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('contact.phone')}
           </label>
           <input
@@ -81,11 +107,9 @@ export default function ContactPage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="subject"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="subject" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('contact.subject')}
           </label>
           <input
@@ -94,11 +118,9 @@ export default function ContactPage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="message"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('contact.message')}
           </label>
           <textarea
@@ -108,6 +130,7 @@ export default function ContactPage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <button
           type="submit"
           disabled={isSubmitting}
@@ -115,14 +138,11 @@ export default function ContactPage() {
         >
           {isSubmitting ? t('common.loading') : t('common.submit')}
         </button>
+        
         {submitted && (
-          <p className="text-xs text-green-700">{t('contact.success')}</p>
+          <p className="text-sm font-medium text-green-700 mt-2 text-center">{t('contact.success')}</p>
         )}
       </form>
     </div>
   )
-}
-
-function submitContact(data: ContactFormPayload) {
-  throw new Error('Function not implemented.')
 }

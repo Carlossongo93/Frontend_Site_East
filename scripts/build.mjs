@@ -49,6 +49,8 @@ const esbuildOpts = {
 async function copyImages() {
   if (existsSync('src/images')) {
     console.log('Copie des images vers dist/images...')
+    // S'assurer que le dossier cible n'existe pas
+    await rimraf('dist/images')
     await cp('src/images', 'dist/images', { recursive: true })
   } else {
     console.warn("Attention: Le dossier src/images n'existe pas.")

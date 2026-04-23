@@ -136,6 +136,30 @@ export default function Home(): JSX.Element {
           </div>
         </div>
       </section>
+      
+      {/* NOUVELLE SECTION : ACTUALITÉS FACEBOOK */}
+      <section className="w-full bg-slate-50 py-16 md:py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-blue-900 mb-4">
+              {t('sections.blogTitle', 'Actualités & projets en cours')}
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              {t('sections.blogIntro', "Suivez nos dernières interventions sur le terrain.")}
+            </p>
+          </div>
+
+        {/* LE WIDGET ELFSIGHT */}
+        {/* Remplacez la div ci-dessous par celle fournie par Elfsight */}
+          <div class="elfsight-app-8d85d7af-c4ab-47cb-b035-5042ae2c422f" data-elfsight-app-lazy></div>
+    
+          <div className="mt-10 text-center">
+            <Link to="/blog" className="text-blue-900 font-bold hover:text-lime-600 transition-colors">
+              {t('common.viewAll', 'Voir toutes les actualités')} →
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* 4. BANNIÈRE IMPACT / DEVIS */}
       <section className="w-full bg-gradient-to-r from-blue-900 to-blue-800 py-16">

@@ -1,15 +1,22 @@
 /**
- * @file Quote page with a project quote request form.
+ * @file Quote page with a project quote request form integrated with Web3Forms.
  */
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { submitQuoteRequest, type QuoteRequestPayload } from '../shared/api/forms'
 
-/**
- * QuotePage renders a structured form to request a project quote.
- */
+// Structure des données de devis
+interface QuoteRequestPayload {
+  clientName: string
+  clientEmail: string
+  clientPhone?: string
+  projectType?: string
+  location?: string
+  budget?: string
+  details: string
+}
+
 export default function QuotePage() {
   const { t } = useTranslation()
   const {
@@ -18,16 +25,45 @@ export default function QuotePage() {
     reset,
     formState: { isSubmitting },
   } = useForm<QuoteRequestPayload>()
+  
   const [submitted, setSubmitted] = useState(false)
 
   /**
-   * Handles submission of the quote form.
+   * Envoi des données vers Web3Forms au format JSON
    */
   const onSubmit = async (data: QuoteRequestPayload) => {
     setSubmitted(false)
-    await submitQuoteRequest(data)
-    setSubmitted(true)
-    reset()
+    
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          // 🚨 REMPLACEZ LA CLÉ CI-DESSOUS PAR LA MÊME CLÉ QUE POUR LE CONTACT
+          access_key: "f1c683b4-eba6-4046-b0c6-08cd5d1395e0",
+          subject: `Nouvelle demande de devis : ${data.projectType || 'Projet BTP'}`,
+          from_name: "EAST-GABON Devis",
+          // On passe les données du formulaire
+          ...data
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true)
+        reset() // Vide le formulaire
+      } else {
+        console.error("Erreur Web3Forms:", result)
+        alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.")
+      }
+    } catch (error) {
+      console.error("Erreur réseau:", error)
+      alert("Problème de connexion au serveur.")
+    }
   }
 
   return (
@@ -42,10 +78,7 @@ export default function QuotePage() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div>
-          <label
-            htmlFor="clientName"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="clientName" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('quote.clientName')}
           </label>
           <input
@@ -54,11 +87,9 @@ export default function QuotePage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="clientEmail"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="clientEmail" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('quote.clientEmail')}
           </label>
           <input
@@ -68,11 +99,9 @@ export default function QuotePage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="clientPhone"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="clientPhone" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('quote.clientPhone')}
           </label>
           <input
@@ -81,11 +110,9 @@ export default function QuotePage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="projectType"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="projectType" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('quote.projectType')}
           </label>
           <input
@@ -94,11 +121,9 @@ export default function QuotePage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="location"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="location" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('quote.location')}
           </label>
           <input
@@ -107,11 +132,9 @@ export default function QuotePage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="budget"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="budget" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('quote.budget')}
           </label>
           <input
@@ -120,11 +143,9 @@ export default function QuotePage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <div>
-          <label
-            htmlFor="details"
-            className="block text-xs font-semibold uppercase tracking-wide text-slate-700"
-          >
+          <label htmlFor="details" className="block text-xs font-semibold uppercase tracking-wide text-slate-700">
             {t('quote.details')}
           </label>
           <textarea
@@ -134,6 +155,7 @@ export default function QuotePage() {
             className="mt-1 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-900 focus:ring-2 focus:ring-blue-200"
           />
         </div>
+        
         <button
           type="submit"
           disabled={isSubmitting}
@@ -141,8 +163,9 @@ export default function QuotePage() {
         >
           {isSubmitting ? t('common.loading') : t('common.submit')}
         </button>
+        
         {submitted && (
-          <p className="text-xs text-green-700">{t('quote.success')}</p>
+          <p className="text-sm font-medium text-green-700 mt-2 text-center">{t('quote.success')}</p>
         )}
       </form>
     </div>
