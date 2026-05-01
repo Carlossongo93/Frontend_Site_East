@@ -140,32 +140,46 @@ export function MainLayout({ children }: MainLayoutProps) {
         {children ?? <Outlet />}
       </main>
 
-      {/* --- FOOTER --- */}
-      <footer className="border-t border-slate-200 bg-white pt-12 pb-6 mt-auto">
+      {/* --- FOOTER ENRICHI --- */}
+      <footer className="border-t border-slate-200 bg-white pt-12 pb-6">
         <div className="mx-auto max-w-6xl px-4">
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+            {/* Colonne 1 : Marque & Description */}
             <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <div className="text-base font-extrabold tracking-wide text-blue-900 uppercase">
-                  {t('brand.name', 'EAST-GABON')}
+              <Link to="/" className="flex items-center gap-3">
+                <img
+                  src="https://pub-cdn.sider.ai/u/U0L5HAK1Y90/web-coder/6950810df028f342ba2e2e5f/resource/cd72d763-d436-4fc2-bda3-46cdee9ab638.jpg"
+                  alt={t('brand.name')}
+                  className="h-10 w-auto object-contain"
+                />
+                <div className="leading-tight">
+                  <div className="text-base font-extrabold tracking-wide text-blue-900">
+                    {t('brand.name')}
+                  </div>
                 </div>
-              </div>
+              </Link>
               <p className="text-sm text-slate-600 leading-relaxed">
                 {t('hero.subtitle', "EAST-GABON accompagne les maîtres d'ouvrage publics et privés de l'étude à la réalisation.")}
               </p>
             </div>
 
+            {/* Colonne 2 : Liens Rapides */}
             <div>
               <h3 className="font-bold text-blue-900 mb-4 uppercase tracking-wide text-xs">
                 {t('footer.quickLinks', 'Liens Rapides')}
               </h3>
               <ul className="space-y-2 text-sm text-slate-600">
-                <li><Link to="/" className="hover:text-blue-900 transition-colors">Accueil</Link></li>
-                <li><Link to="/services" className="hover:text-blue-900 transition-colors">Services</Link></li>
-                <li><Link to="/contact" className="hover:text-blue-900 transition-colors">Contact</Link></li>
+                <li><Link to="/" className="hover:text-blue-900 transition-colors">{t('nav.home')}</Link></li>
+                <li><Link to="/services" className="hover:text-blue-900 transition-colors">{t('nav.services')}</Link></li>
+                <li><Link to="/portfolio" className="hover:text-blue-900 transition-colors">{t('nav.portfolio')}</Link></li>
+                <li><Link to="/qhse" className="hover:text-blue-900 transition-colors">{t('nav.qhse')}</Link></li>
+                <li><Link to="/about" className="hover:text-blue-900 transition-colors">{t('nav.about')}</Link></li>
+                <li><Link to="/contact" className="hover:text-blue-900 transition-colors">{t('nav.contact')}</Link></li>
               </ul>
             </div>
 
+            {/* Colonne 3 : Contact */}
             <div>
               <h3 className="font-bold text-blue-900 mb-4 uppercase tracking-wide text-xs">
                 {t('footer.contactTitle', 'Nous Contacter')}
@@ -173,31 +187,48 @@ export function MainLayout({ children }: MainLayoutProps) {
               <ul className="space-y-3 text-sm text-slate-600">
                 <li className="flex items-start gap-3">
                   <MapPin className="h-4 w-4 shrink-0 text-lime-600 mt-0.5" />
-                  <span>Libreville, Gabon</span>
+                  <span>Alibadeng, vers 3 Manguiers<br />5919 Libreville, Gabon</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Phone className="h-4 w-4 shrink-0 text-lime-600 mt-0.5" />
-                  <span>+241 11 44 29 23</span>
+                  <span>+241 11 44 29 23<br />+241 66 79 16 86</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Mail className="h-4 w-4 shrink-0 text-lime-600 mt-0.5" />
+                  <span>contact@eastgabon.com</span>
                 </li>
               </ul>
             </div>
 
+            {/* Colonne 4 : Réseaux Sociaux */}
             <div>
               <h3 className="font-bold text-blue-900 mb-4 uppercase tracking-wide text-xs">
                 {t('footer.socials', 'Suivez-nous')}
               </h3>
               <div className="flex items-center gap-3">
-                <Facebook className="h-5 w-5 text-slate-400 hover:text-blue-900 cursor-pointer" />
-                <Linkedin className="h-5 w-5 text-slate-400 hover:text-blue-900 cursor-pointer" />
-                <Instagram className="h-5 w-5 text-slate-400 hover:text-blue-900 cursor-pointer" />
+                <a href="https://www.facebook.com/eastgabon" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition-colors hover:bg-blue-900 hover:text-white" aria-label="Facebook">
+                  <Facebook className="h-4 w-4" />
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition-colors hover:bg-blue-900 hover:text-white" aria-label="LinkedIn">
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition-colors hover:bg-blue-900 hover:text-white" aria-label="Instagram">
+                  <Instagram className="h-4 w-4" />
+                </a>
               </div>
             </div>
           </div>
 
+          {/* Bandeau inférieur avec droits et concepteur */}
           <div className="border-t border-slate-200 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <div>&copy; {new Date().getFullYear()} EAST-GABON.</div>
-            <div>Conçu par International-IA</div>
+            <div className="text-center md:text-left">
+              &copy; {new Date().getFullYear()} EAST-GABON. {t('footer.rights', 'Tous droits réservés.')}
+            </div>
+            <div className="text-center md:text-right">
+              {t('footer.designedBy', 'Conçu par')} <a href="https://international-ia.tech" target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-900 transition-colors hover:text-lime-600">International-IA</a>
+            </div>
           </div>
+
         </div>
       </footer>
     </div>
@@ -205,15 +236,26 @@ export function MainLayout({ children }: MainLayoutProps) {
 }
 
 /**
- * Composants de navigation stylisés
+ * Props for the NavLink helper component.
  */
 interface NavLinkProps {
+  /**
+   * Target path for the navigation link.
+   */
   to: string
+  /**
+   * Child content (label).
+   */
   children: ReactNode
+  /**
+   * Whether the link is currently active.
+   */
   active?: boolean
-  onClick?: () => void
 }
 
+/**
+ * NavLink is a simple wrapper around Link to render styled navigation items.
+ */
 function NavLink({ to, children, active }: NavLinkProps) {
   return (
     <Link
@@ -222,22 +264,6 @@ function NavLink({ to, children, active }: NavLinkProps) {
         active
           ? 'border-blue-900 text-blue-900'
           : 'border-transparent text-slate-700 hover:text-blue-900'
-      }`}
-    >
-      {children}
-    </Link>
-  )
-}
-
-function MobileNavLink({ to, children, active, onClick }: NavLinkProps) {
-  return (
-    <Link
-      to={to}
-      onClick={onClick}
-      className={`block px-3 py-3 rounded-md text-sm font-semibold uppercase tracking-wide transition-all ${
-        active
-          ? 'bg-blue-50 text-blue-900 border-l-4 border-blue-900'
-          : 'text-slate-700 hover:bg-slate-50 border-l-4 border-transparent'
       }`}
     >
       {children}
