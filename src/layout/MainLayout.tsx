@@ -271,4 +271,45 @@ function NavLink({ to, children, active }: NavLinkProps) {
   )
 }
 
+/**
+ * Props for the MobileNavLink helper component.
+ */   
+interface MobileNavLinkProps {
+  /**
+   * Target path for the navigation link.
+   */
+  to: string
+  /**
+   * Child content (label).
+   */
+  children: ReactNode
+  /**
+   * Whether the link is currently active.
+   */
+  active?: boolean
+  /**
+   * Optional click handler.
+   */
+  onClick?: () => void
+}
+
+/**
+ * MobileNavLink is a styled Link used in the mobile dropdown menu.
+ */   
+function MobileNavLink({ to, children, active, onClick }: MobileNavLinkProps) {
+  return (
+    <Link
+      to={to}
+      onClick={onClick}
+      className={`block py-2 text-sm transition-colors ${
+        active
+          ? 'text-blue-900 font-semibold'
+          : 'text-slate-700 hover:text-blue-900'
+      }`}
+    >
+      {children}
+    </Link>
+  )
+}
+
 export default MainLayout
