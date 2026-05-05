@@ -225,7 +225,7 @@ export function MainLayout({ children }: MainLayoutProps) {
               &copy; {new Date().getFullYear()} EAST-GABON. {t('footer.rights', 'Tous droits réservés.')}
             </div>
             <div className="text-center md:text-right">
-              {t('footer.designedBy', 'Conçu par')} <a href="https://international-ia.tech" target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-900 transition-colors hover:text-lime-600">International-IA</a>
+              {t('footer.designedBy', 'Conçu par')} <a href="https://www.facebook.com/cerveau.engineering" target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-900 transition-colors hover:text-lime-600">International-IA</a>
             </div>
           </div>
 
