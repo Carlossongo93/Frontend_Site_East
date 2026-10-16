@@ -40,6 +40,13 @@ const resources = {
         contact: 'Contact',
         quote: 'Demander un devis',
       },
+      footer: {
+        rights: 'Tous droits réservés.',
+        designedBy: 'Développé par',
+        quickLinks: 'Liens Rapides',
+        contactTitle: 'Nous Contacter',
+        socials: 'Suivez-nous',
+      },
       common: {
         learnMore: 'En savoir plus',
         viewAll: 'Voir tout',
@@ -356,6 +363,13 @@ const resources = {
         about: 'About',
         contact: 'Contact',
         quote: 'Request a quote',
+      },
+      footer: {
+        rights: 'All rights reserved.',
+        designedBy: 'Developed by',
+        quickLinks: 'Quick Links',
+        contactTitle: 'Contact Us',
+        socials: 'Follow Us',
       },
       common: {
         learnMore: 'Learn more',
