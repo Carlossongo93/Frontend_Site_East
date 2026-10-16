@@ -51,9 +51,11 @@ const LanguageSwitcher: FC<LanguageSwitcherProps> = ({ compact }) => {
   }
 
   return (
-    <div className="inline-flex items-center gap-1">
+    <div className="inline-flex items-center gap-1" role="group" aria-label="Sélection de la langue / Language selection">
       <button
         type="button"
+        aria-label="Passer en français"
+        aria-pressed={current === 'fr'}
         className={`${baseClass} ${
           current === 'fr' ? activeClass : inactiveClass
         }`}
@@ -63,6 +65,8 @@ const LanguageSwitcher: FC<LanguageSwitcherProps> = ({ compact }) => {
       </button>
       <button
         type="button"
+        aria-label="Switch to English"
+        aria-pressed={current === 'en'}
         className={`${baseClass} ${
           current === 'en' ? activeClass : inactiveClass
         }`}

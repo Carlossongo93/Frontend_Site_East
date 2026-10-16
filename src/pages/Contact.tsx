@@ -42,9 +42,8 @@ export default function ContactPage() {
         body: JSON.stringify({
           // 🚨 REMPLACEZ LA CLÉ CI-DESSOUS PAR CELLE REÇUE PAR EMAIL
           access_key: "f1c683b4-eba6-4046-b0c6-08cd5d1395e0",
-          // Permet de définir l'objet de l'email que vous recevrez
+          ...data,
           subject: `Contact Web: ${data.subject || 'Nouveau message'}`,
-          ...data // On injecte toutes les données du formulaire (nom, email, message...)
         }),
       });
 

@@ -121,19 +121,106 @@ export default function QHSEPage() {
                     </div>
                     <ul className="space-y-4">
                         
-                        {/* NOUVEAU : Certification ISO 3834 mise en tête de liste */}
-                        <li className="flex items-center gap-4 p-3 bg-slate-50 rounded-lg border border-slate-100">
-                            <div className="shrink-0 bg-white p-1 rounded shadow-sm">
+                        {/* Certification ISO 3834 */}
+                        <li className="flex items-center gap-4 p-3 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/80 transition-colors">
+                            <a 
+                                href="/images/00/3834.svg" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                title="Voir le certificat ISO 3834-2"
+                                className="shrink-0 bg-white p-1 rounded shadow-sm border border-slate-200 block hover:opacity-80 transition-opacity"
+                            >
                                 <img 
                                     src="/images/00/Certifié ISO 3834 EN.png" 
                                     alt="Certification ISO 3834-2:2021" 
-                                    className="h-12 w-auto object-contain"
+                                    className="h-14 w-auto object-contain"
                                 />
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="font-bold text-blue-900">{t('qhse.certifications.items.iso3834')}</span>
+                            </a>
+                            <div className="flex flex-col flex-1">
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className="font-bold text-blue-900">{t('qhse.certifications.items.iso3834')}</span>
+                                  <a href="/images/00/3834.svg" target="_blank" rel="noopener noreferrer" className="text-xs text-lime-600 hover:text-lime-700 font-semibold underline shrink-0">Voir certificat ↗</a>
+                                </div>
                                 <span className="text-slate-700 text-sm">
                                     {t('qhse.certifications.items.iso3834Desc')}
+                                </span>
+                            </div>
+                        </li>
+
+                        {/* Certification ISO 9001 */}
+                        <li className="flex items-center gap-4 p-3 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/80 transition-colors">
+                            <a 
+                                href="/images/00/9001.svg" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                title="Voir le certificat ISO 9001"
+                                className="shrink-0 bg-white p-1 rounded shadow-sm border border-slate-200 block hover:opacity-80 transition-opacity"
+                            >
+                                <img 
+                                    src="/images/00/9001.svg" 
+                                    alt="Certification ISO 9001" 
+                                    className="h-14 w-auto object-contain"
+                                />
+                            </a>
+                            <div className="flex flex-col flex-1">
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className="font-bold text-blue-900">{t('qhse.certifications.items.iso9001')}</span>
+                                  <a href="/images/00/9001.svg" target="_blank" rel="noopener noreferrer" className="text-xs text-lime-600 hover:text-lime-700 font-semibold underline shrink-0">Voir certificat ↗</a>
+                                </div>
+                                <span className="text-slate-700 text-sm">
+                                    {t('qhse.certifications.items.iso9001Desc')}
+                                </span>
+                            </div>
+                        </li>
+
+                        {/* Certification ISO 14001 */}
+                        <li className="flex items-center gap-4 p-3 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/80 transition-colors">
+                            <a 
+                                href="/images/00/14001.svg" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                title="Voir le certificat ISO 14001"
+                                className="shrink-0 bg-white p-1 rounded shadow-sm border border-slate-200 block hover:opacity-80 transition-opacity"
+                            >
+                                <img 
+                                    src="/images/00/14001.svg" 
+                                    alt="Certification ISO 14001" 
+                                    className="h-14 w-auto object-contain"
+                                />
+                            </a>
+                            <div className="flex flex-col flex-1">
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className="font-bold text-blue-900">{t('qhse.certifications.items.iso14001')}</span>
+                                  <a href="/images/00/14001.svg" target="_blank" rel="noopener noreferrer" className="text-xs text-lime-600 hover:text-lime-700 font-semibold underline shrink-0">Voir certificat ↗</a>
+                                </div>
+                                <span className="text-slate-700 text-sm">
+                                    {t('qhse.certifications.items.iso14001Desc')}
+                                </span>
+                            </div>
+                        </li>
+
+                        {/* Certification ISO 45001 */}
+                        <li className="flex items-center gap-4 p-3 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100/80 transition-colors">
+                            <a 
+                                href="/images/00/45001.svg" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                title="Voir le certificat ISO 45001"
+                                className="shrink-0 bg-white p-1 rounded shadow-sm border border-slate-200 block hover:opacity-80 transition-opacity"
+                            >
+                                <img 
+                                    src="/images/00/45001.svg" 
+                                    alt="Certification ISO 45001" 
+                                    className="h-14 w-auto object-contain"
+                                />
+                            </a>
+                            <div className="flex flex-col flex-1">
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className="font-bold text-blue-900">{t('qhse.certifications.items.iso45001')}</span>
+                                  <a href="/images/00/45001.svg" target="_blank" rel="noopener noreferrer" className="text-xs text-lime-600 hover:text-lime-700 font-semibold underline shrink-0">Voir certificat ↗</a>
+                                </div>
+                                <span className="text-slate-700 text-sm">
+                                    {t('qhse.certifications.items.iso45001Desc')}
                                 </span>
                             </div>
                         </li>

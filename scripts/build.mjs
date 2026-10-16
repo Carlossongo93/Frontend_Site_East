@@ -68,8 +68,11 @@ if (isProd) {
   const ctx = await esbuild.context(esbuildOpts)
   
   await ctx.watch()
+  const requestedPort = Number(process.env.PORT) || 5174
   const { hosts, port } = await ctx.serve({
     servedir: 'dist', 
+    fallback: 'dist/index.html',
+    port: requestedPort,
   })
   console.log(`Running on:`)
   hosts.forEach((host) => {

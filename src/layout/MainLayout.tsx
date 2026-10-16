@@ -45,10 +45,22 @@ export function MainLayout({ children }: MainLayoutProps) {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
+      {/* Lien d'évitement (Skip to main content) pour l'accessibilité au clavier */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-full focus:bg-blue-900 focus:px-4 focus:py-2 focus:text-xs focus:font-bold focus:uppercase focus:text-white focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-lime-500"
+      >
+        Aller au contenu principal
+      </a>
+
       <header className="border-b border-slate-200 bg-white/80 backdrop-blur sticky top-0 z-50">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:py-4">
           <Link to="/" className="flex items-center gap-3" onClick={closeMenu}>
-            <div className="bg-blue-900 h-10 w-10 rounded flex items-center justify-center text-white font-bold text-xl">EG</div>
+            <img
+              src="/images/00/logo-east.png"
+              alt={t('brand.name', 'EAST-GABON')}
+              className="h-10 w-10 md:h-12 md:w-12 object-contain"
+            />
             <div className="leading-tight">
               <div className="text-base font-extrabold tracking-wide text-blue-900 md:text-lg">
                 {t('brand.name', 'EAST-GABON')}
@@ -60,7 +72,7 @@ export function MainLayout({ children }: MainLayoutProps) {
           </Link>
 
           {/* Navigation Desktop */}
-          <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+          <nav className="hidden items-center gap-6 text-sm font-medium md:flex" aria-label="Navigation principale">
             <NavLink to="/" active={isActive('/')}>
               {t('nav.home', 'Accueil')}
             </NavLink>
@@ -72,9 +84,6 @@ export function MainLayout({ children }: MainLayoutProps) {
             </NavLink>
             <NavLink to="/blog" active={isActive('/blog')}>
               {t('nav.blog', 'Actualités')}
-            </NavLink>
-            <NavLink to="/qhse" active={isActive('/qhse')}>
-              {t('nav.qhse', 'QHSE')}
             </NavLink>
             <NavLink to="/contact" active={isActive('/contact')}>
               {t('nav.contact', 'Contact')}
@@ -102,7 +111,9 @@ export function MainLayout({ children }: MainLayoutProps) {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-1 ml-1 text-blue-900 hover:bg-blue-50 rounded-md transition-colors focus:outline-none"
-              aria-label="Toggle mobile menu"
+              aria-label={isMobileMenuOpen ? "Fermer le menu de navigation" : "Ouvrir le menu de navigation"}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -112,7 +123,7 @@ export function MainLayout({ children }: MainLayoutProps) {
         {/* Menu Déroulant Mobile */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-200 shadow-xl z-50">
-            <nav className="flex flex-col px-4 py-4 gap-2">
+            <nav id="mobile-navigation" className="flex flex-col px-4 py-4 gap-2" aria-label="Menu mobile">
               <MobileNavLink to="/" active={isActive('/')} onClick={closeMenu}>
                 {t('nav.home', 'Accueil')}
               </MobileNavLink>
@@ -125,9 +136,6 @@ export function MainLayout({ children }: MainLayoutProps) {
               <MobileNavLink to="/blog" active={isActive('/blog')} onClick={closeMenu}>
                 {t('nav.blog', 'Actualités')}
               </MobileNavLink>
-              <MobileNavLink to="/qhse" active={isActive('/qhse')} onClick={closeMenu}>
-                {t('nav.qhse', 'QHSE')}
-              </MobileNavLink>
               <MobileNavLink to="/contact" active={isActive('/contact')} onClick={closeMenu}>
                 {t('nav.contact', 'Contact')}
               </MobileNavLink>
@@ -136,7 +144,7 @@ export function MainLayout({ children }: MainLayoutProps) {
         )}
       </header>
 
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {children ?? <Outlet />}
       </main>
 
@@ -149,7 +157,7 @@ export function MainLayout({ children }: MainLayoutProps) {
             <div className="flex flex-col gap-4">
               <Link to="/" className="flex items-center gap-3">
                 <img
-                  src="https://pub-cdn.sider.ai/u/U0L5HAK1Y90/web-coder/6950810df028f342ba2e2e5f/resource/cd72d763-d436-4fc2-bda3-46cdee9ab638.jpg"
+                  src="/images/00/logo-east.png"
                   alt={t('brand.name')}
                   className="h-10 w-auto object-contain"
                 />
@@ -187,7 +195,7 @@ export function MainLayout({ children }: MainLayoutProps) {
               <ul className="space-y-3 text-sm text-slate-600">
                 <li className="flex items-start gap-3">
                   <MapPin className="h-4 w-4 shrink-0 text-lime-600 mt-0.5" />
-                  <span>Alibadeng, vers 3 Manguiers<br />5919 Libreville, Gabon</span>
+                  <span>Alibadeng, Terminus 3 Manguiers,<br />5919 Libreville, Gabon</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Phone className="h-4 w-4 shrink-0 text-lime-600 mt-0.5" />

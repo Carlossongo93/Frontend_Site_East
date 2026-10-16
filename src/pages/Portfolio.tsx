@@ -222,9 +222,9 @@ const ProjectCard = ({ project }: { project: typeof PROJECTS[0] }) => {
             <MapPin className="h-3 w-3" />
             {location}
           </div>
-          <h3 className="text-lg font-bold leading-tight shadow-black drop-shadow-md md:text-xl">
+          <h2 className="text-lg font-bold leading-tight shadow-black drop-shadow-md md:text-xl">
             {title}
-          </h3>
+          </h2>
           <p className="mt-1 text-sm text-gray-300">{client}</p>
         </div>
       </div>
